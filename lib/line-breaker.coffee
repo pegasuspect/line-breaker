@@ -25,7 +25,7 @@ module.exports =
     # Is every single line in the selection a comment?
     isComments = [selection.start.row..selection.end.row].every (row) =>
       return false unless 0 <= row <= @editor.getLastBufferRow()
-      @editor.tokenizedBuffer.tokenizedLines[row]?.isComment()
+      @editor.isBufferRowCommented(row)
 
     # Begin the mutation, make sure it's undoable in a single step
     @editor.transact =>
@@ -103,4 +103,4 @@ module.exports =
     yield currentLine if currentLine.length > 0
 
   toggleComments: (start, end) ->
-    @editor.languageMode.toggleLineCommentsForBufferRows(start, end)
+    @editor.toggleLineCommentsForBufferRows(start, end)
